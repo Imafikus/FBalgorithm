@@ -28,12 +28,12 @@ void forwardBackward(int &observedVars, int &possibleStates)
 
     ///////////FORWARD
     for(int i = 1; i <= possibleStates; i++)
-        alfa[1][i] = P[i]*E[X[1]][i];
+        alfa[1][i] = P[i]*E[1][i];
 
     for(int k = 2; k <= observedVars; k++)
         for(int i = 1; i <= possibleStates; i++)
             for(int j = 1; j <= possibleStates; j++)
-                alfa[k][i] += alfa[k-1][i] * E[X[k]][i] * T[i][j];
+                alfa[k][i] += alfa[k-1][i] * E[i][j] * T[i][j];
 
 
     //BACKWARD
@@ -44,7 +44,7 @@ void forwardBackward(int &observedVars, int &possibleStates)
     for(int k = observedVars-1; k >= 1; k--)
         for(int i = 1; i <= possibleStates; i++)
             for(int j = 1; j <= possibleStates; j++)
-                beta[k][i] += beta[k+1][i] * E[k+1][i] * T[i][j];
+                beta[k][i] += beta[k+1][i] * E[i][j] * T[i][j];
 
     //NORMALIZACIJA
 
@@ -68,17 +68,17 @@ int main()
     int observedVars = 4;
     int possibleStates = 4;
     //pravljenje T
-    for (int i = 0; i <= observedVars; i++)
+    for (int i = 0; i <= possibleStates; i++)
         for (int j = 0; j <= possibleStates; j++)
             T[i][j]=0.5;
 
     //pravljenje E
-    for (int i = 0; i <= observedVars; i++)
+    for (int i = 0; i <= possibleStates; i++)
         for (int j = 0; j <= possibleStates; j++)
             E[i][j]=0.25;
 
     //pravljenje P
-    for(int i = 0; i <= observedVars; i++)
+    for(int i = 0; i <= possibleStates; i++)
         P[i] = 0.25;
     //pravljenje X
     for(int i = 0; i < observedVars; i++)
