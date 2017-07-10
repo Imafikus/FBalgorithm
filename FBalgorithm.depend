@@ -1,0 +1,8 @@
+# depslib dependency file v1.0
+1499708383 source:e:\petnica2k17\hmmmaze\fbalgorithm\main.cpp
+	<iostream>
+	<vector>
+	<algorithm>
+	<string>
+	<fstream>
+
