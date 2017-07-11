@@ -18,11 +18,11 @@ float normalized[MAX][MAX];
 void forwardBackward(int &observedVars, int &possibleStates)
 {
     //inicijalizacija vektora
-    for (int i = 0; i < observedVars; i++)
+    for (int i = 0; i < possibleStates; i++)
         for (int j = 0; j < possibleStates; j++)
             alfa[i][j]=0;
 
-    for (int i = 0; i < observedVars; i++)
+    for (int i = 0; i < possibleStates; i++)
         for (int j = 0; j < possibleStates; j++)
             beta[i][j]=0;
 
@@ -44,7 +44,7 @@ void forwardBackward(int &observedVars, int &possibleStates)
     for(int k = observedVars-1; k >= 1; k--)
         for(int i = 1; i <= possibleStates; i++)
             for(int j = 1; j <= possibleStates; j++)
-                beta[k][i] += beta[k+1][i] * E[i][j] * T[i][j];
+                beta[k][i] += beta[k+1][i] * E[X[k+1]][i] * T[i][j];
 
     //NORMALIZACIJA
 
@@ -67,15 +67,16 @@ int main()
 {
     int observedVars = 4;
     int possibleStates = 4;
+    int possibleStatesX = 2;
     //pravljenje T
     for (int i = 0; i <= possibleStates; i++)
         for (int j = 0; j <= possibleStates; j++)
-            T[i][j]=0.5;
+            T[i][j]=0.25;
 
     //pravljenje E
-    for (int i = 0; i <= possibleStates; i++)
+    for (int i = 0; i <= possibleStatesX; i++)
         for (int j = 0; j <= possibleStates; j++)
-            E[i][j]=0.25;
+            E[i][j]=0.5;
 
     //pravljenje P
     for(int i = 0; i <= possibleStates; i++)
