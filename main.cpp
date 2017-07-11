@@ -1,3 +1,4 @@
+
 #include <iostream>
 #include <vector>
 #include <algorithm>
@@ -17,12 +18,12 @@ float normalized[MAX][MAX];
 
 void forwardBackward(int &observedVars, int &possibleStates)
 {
-    //inicijalizacija vektora
-    for (int i = 0; i < observedVars; i++)
+    //making arrays
+    for (int i = 0; i < possibleStates; i++)
         for (int j = 0; j < possibleStates; j++)
             alfa[i][j]=0;
 
-    for (int i = 0; i < observedVars; i++)
+    for (int i = 0; i < possibleStates; i++)
         for (int j = 0; j < possibleStates; j++)
             beta[i][j]=0;
 
@@ -33,7 +34,7 @@ void forwardBackward(int &observedVars, int &possibleStates)
     for(int k = 2; k <= observedVars; k++)
         for(int i = 1; i <= possibleStates; i++)
             for(int j = 1; j <= possibleStates; j++)
-                alfa[k][i] += alfa[k-1][i] * E[X[k]][i] * T[i][j];
+                alfa[k][i] += alfa[k-1][i] * E[X[k]][j] * T[i][j];
 
 
     //BACKWARD
@@ -44,9 +45,9 @@ void forwardBackward(int &observedVars, int &possibleStates)
     for(int k = observedVars-1; k >= 1; k--)
         for(int i = 1; i <= possibleStates; i++)
             for(int j = 1; j <= possibleStates; j++)
-                beta[k][i] += beta[k+1][i] * E[k+1][i] * T[i][j];
+                beta[k][i] += beta[k+1][i] * E[X[k+1]][j] * T[i][j];
 
-    //NORMALIZACIJA
+    //NORMALIZATION
 
     for (int k = 1; k <= observedVars; k++)
     {
@@ -67,20 +68,21 @@ int main()
 {
     int observedVars = 4;
     int possibleStates = 4;
-    //pravljenje T
-    for (int i = 0; i <= observedVars; i++)
+    int possibleStatesX = 2;
+    //making T matrix
+    for (int i = 0; i <= possibleStates; i++)
         for (int j = 0; j <= possibleStates; j++)
-            T[i][j]=0.5;
+            T[i][j]=0.25;
 
-    //pravljenje E
-    for (int i = 0; i <= observedVars; i++)
+    //making E matrix
+    for (int i = 0; i <= possibleStatesX; i++)
         for (int j = 0; j <= possibleStates; j++)
-            E[i][j]=0.25;
+            E[i][j]=0.5;
 
-    //pravljenje P
-    for(int i = 0; i <= observedVars; i++)
+    //making P array
+    for(int i = 0; i <= possibleStates; i++)
         P[i] = 0.25;
-    //pravljenje X
+    //input of Oserved vars X
     for(int i = 0; i < observedVars; i++)
         cin>>X[i];
 
@@ -95,3 +97,5 @@ int main()
 
 
 }
+
+
